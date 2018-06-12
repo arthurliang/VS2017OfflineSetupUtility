@@ -190,12 +190,12 @@ namespace VS2017OfflineSetupUtility.ViewModels
         {
             get { return _version; }
             set { _version = value;
-                VersionObject = new System.Version(value.Split('=')[1]);
+                VersionObject = new Version(value.Split('=')[1]);
             }
         }
         #endregion
 
         public string FullPath { get; set; }
-        public System.Version VersionObject { get; private set; }
+        public Version VersionObject { get; private set; }
     }
 }
