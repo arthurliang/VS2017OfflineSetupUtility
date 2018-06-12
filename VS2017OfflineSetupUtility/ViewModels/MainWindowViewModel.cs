@@ -117,34 +117,36 @@ namespace VS2017OfflineSetupUtility.ViewModels
 
         private void Classification()
         {
-            DirectoryInfo dirInfo = new DirectoryInfo(SelectedFolderPath);
+            var dirInfo = new DirectoryInfo(SelectedFolderPath);
+            var subDirectories = dirInfo.GetDirectories();
 
-            //classification
-            var directories = dirInfo.GetDirectories();
-            foreach (var directory in directories)
+            foreach (var subDirectory in subDirectories)
             {
-                var vsModule = new VsModule();
-                if (directory.Name.Contains(","))
-                {
-                    var stringSplit = directory.Name.Split(',').ToList();
-                    vsModule.Name = stringSplit.FirstOrDefault();
-                    vsModule.Version = stringSplit[1];
-                    stringSplit.Remove(vsModule.Name);
-                    stringSplit.Remove(vsModule.Version);
-                    if (stringSplit.Count() > 0)
-                    {
-                        foreach (var item in stringSplit)
-                            vsModule.Name = vsModule.Name + "," + item;
-                    }
-                }
-                else
-                {
-                    continue;
-                }
-
-                vsModule.FullPath = directory.FullName;
-                ModuleCollection.Add(vsModule);
+                ClassifySubDirectory(subDirectory);
             }
+        }
+
+        private void ClassifySubDirectory(DirectoryInfo subDirectory)
+        {
+            var vsModule = new VsModule();
+            if (!subDirectory.Name.Contains(","))
+            {
+                return;
+            }
+
+            var stringSplit = subDirectory.Name.Split(',').ToList();
+            vsModule.Name = stringSplit.FirstOrDefault();
+            vsModule.Version = stringSplit[1];
+            stringSplit.Remove(vsModule.Name);
+            stringSplit.Remove(vsModule.Version);
+            if (stringSplit.Count() > 0)
+            {
+                foreach (var item in stringSplit)
+                    vsModule.Name = vsModule.Name + "," + item;
+            }
+
+            vsModule.FullPath = subDirectory.FullName;
+            ModuleCollection.Add(vsModule);
         }
 
         private bool SelectVs2017OfflineSetupRootFolder()
