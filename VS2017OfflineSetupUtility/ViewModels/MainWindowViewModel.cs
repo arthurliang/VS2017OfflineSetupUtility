@@ -181,15 +181,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
 
     public class VsModule
     {
-        #region Name
-        private string _name;
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-        #endregion
+        public string Name { get; set; }
 
         #region Version
         private string _version;
