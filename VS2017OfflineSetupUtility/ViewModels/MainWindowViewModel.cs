@@ -128,15 +128,17 @@ namespace VS2017OfflineSetupUtility.ViewModels
 
         private void ClassifySubDirectory(DirectoryInfo subDirectory)
         {
-            var vsModule = new VsModule();
             if (!subDirectory.Name.Contains(","))
             {
                 return;
             }
 
             var stringSplit = subDirectory.Name.Split(',').ToList();
+
+            var vsModule = new VsModule();
             vsModule.Name = stringSplit.FirstOrDefault();
             vsModule.Version = stringSplit[1];
+
             stringSplit.Remove(vsModule.Name);
             stringSplit.Remove(vsModule.Version);
             if (stringSplit.Count() > 0)
