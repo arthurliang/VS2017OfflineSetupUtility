@@ -84,14 +84,8 @@ namespace VS2017OfflineSetupUtility.ViewModels
                 {
                     try
                     {
-                        CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-                        dialog.InitialDirectory = "C:\\Users";
-                        dialog.IsFolderPicker = true;
-                        dialog.AddToMostRecentlyUsedList = false;
-                        dialog.Title = "Select VS2017 offline setup folder";
+                        if (!SelectVs2017OfflineSetupRootFolder()) return;
 
-                        if (dialog.ShowDialog() != CommonFileDialogResult.Ok) return;
-                        SelectedFolderPath = dialog.FileName;
                         DirectoryInfo dirInfo = new DirectoryInfo(SelectedFolderPath);
 
                         //classification
@@ -146,6 +140,21 @@ namespace VS2017OfflineSetupUtility.ViewModels
                 }));
             }
         }
+
+        private bool SelectVs2017OfflineSetupRootFolder()
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "C:\\Users";
+            dialog.IsFolderPicker = true;
+            dialog.AddToMostRecentlyUsedList = false;
+            dialog.Title = "Select VS2017 offline setup folder";
+
+            if (dialog.ShowDialog() != CommonFileDialogResult.Ok) return false;
+
+            SelectedFolderPath = dialog.FileName;
+            return true;
+        }
+
         #endregion
 
         #region DeleteOldVersionCommand
