@@ -203,7 +203,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
         }
         #endregion
 
-        public string FullPath;
+        public string FullPath { get; set; }
         public System.Version VersionObject { get; private set; }
     }
 }
