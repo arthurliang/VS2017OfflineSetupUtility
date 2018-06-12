@@ -143,11 +143,13 @@ namespace VS2017OfflineSetupUtility.ViewModels
 
         private bool SelectVs2017OfflineSetupRootFolder()
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
-            dialog.IsFolderPicker = true;
-            dialog.AddToMostRecentlyUsedList = false;
-            dialog.Title = "Select VS2017 offline setup folder";
+            var dialog = new CommonOpenFileDialog
+            {
+                InitialDirectory = @"C:\Users",
+                IsFolderPicker = true,
+                AddToMostRecentlyUsedList = false,
+                Title = "Select VS2017 offline setup folder"
+            };
 
             if (dialog.ShowDialog() != CommonFileDialogResult.Ok) return false;
 
