@@ -143,7 +143,8 @@ namespace VS2017OfflineSetupUtility.ViewModels
 
             stringSplit.Remove(vsModule.Name);
             stringSplit.Remove(vsModule.Version);
-            if (stringSplit.Count() > 0)
+
+            if (stringSplit.Any())
             {
                 foreach (var item in stringSplit)
                     vsModule.Name = vsModule.Name + "," + item;
