@@ -88,9 +88,8 @@ namespace VS2017OfflineSetupUtility.ViewModels
 
                         Classification();
 
-                        var duplicateModules = SelectAllTheModulesWithSameNameFromModuleCollection();
-
-                        GetAllTheOldVersionModulesFromDuplicateModules(duplicateModules);
+                        GetAllTheOldVersionModulesFromDuplicateModules(
+                            GetDuplicateModulesFromModuleCollection());
 
                         if (!OldVersionModule.Any())
                             MessageBox.Show("Old version folder does not exist.");
@@ -142,7 +141,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
             ModuleCollection.Add(vsModule);
         }
 
-        private ObservableCollection<VsModule> SelectAllTheModulesWithSameNameFromModuleCollection()
+        private ObservableCollection<VsModule> GetDuplicateModulesFromModuleCollection()
         {
             return ModuleCollection.Where(module =>
                 ModuleCollection
