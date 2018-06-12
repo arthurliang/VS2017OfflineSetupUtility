@@ -147,7 +147,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
             if (stringSplit.Any())
             {
                 foreach (var item in stringSplit)
-                    vsModule.Name = vsModule.Name + "," + item;
+                    vsModule.Name = $"{vsModule.Name},{item}";
             }
 
             vsModule.FullPath = subDirectory.FullName;
