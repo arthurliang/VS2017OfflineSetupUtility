@@ -31,9 +31,9 @@ namespace VS2017OfflineSetupUtility.ViewModels
         /// <summary>
         /// Contain all directory names for selected folder. Left for future purpose; binding to UI list
         /// </summary>
-        private ObservableCollection<VSModule> _moduleCollection = new ObservableCollection<VSModule>();
+        private ObservableCollection<VsModule> _moduleCollection = new ObservableCollection<VsModule>();
 
-        public ObservableCollection<VSModule> ModuleCollection
+        public ObservableCollection<VsModule> ModuleCollection
         {
             get { return _moduleCollection; }
             set { SetProperty(ref _moduleCollection, value); }
@@ -41,11 +41,11 @@ namespace VS2017OfflineSetupUtility.ViewModels
         #endregion
 
         #region OldVersionModule
-        private ObservableCollection<VSModule> _oldVersionModule = new ObservableCollection<VSModule>();
+        private ObservableCollection<VsModule> _oldVersionModule = new ObservableCollection<VsModule>();
         /// <summary>
         /// Contain all directory names for selected folder
         /// </summary>
-        public ObservableCollection<VSModule> OldVersionModule
+        public ObservableCollection<VsModule> OldVersionModule
         {
             get { return _oldVersionModule; }
             set
@@ -99,7 +99,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
                             var directories = dirInfo.GetDirectories();
                             foreach (var directory in directories)
                             {
-                                var vsModule = new VSModule();
+                                var vsModule = new VsModule();
                                 if (directory.Name.Contains(","))
                                 {
                                     var stringSplit = directory.Name.Split(',').ToList();
@@ -125,7 +125,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
                             var duplicateModules =
                             ModuleCollection.Where(module =>
                             ModuleCollection
-                            .Except(new ObservableCollection<VSModule> { module })
+                            .Except(new ObservableCollection<VsModule> { module })
                             .Any(x => x.Name == module.Name)
                             ).ToObservableCollection();
 
@@ -133,7 +133,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
                             OldVersionModule =
                             duplicateModules.Where(module =>
                             duplicateModules
-                            .Except(new ObservableCollection<VSModule> { module })
+                            .Except(new ObservableCollection<VsModule> { module })
                             .Any(x => x.Name == module.Name && x.VersionObject.CompareTo(module.VersionObject) > 0)
                             ).ToObservableCollection();
 
@@ -179,7 +179,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
         #endregion
     }
 
-    public class VSModule
+    public class VsModule
     {
         #region Name
         private string _name;
