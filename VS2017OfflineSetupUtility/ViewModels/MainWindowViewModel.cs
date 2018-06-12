@@ -88,13 +88,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
 
                         Classification();
 
-                        //Select all the Modules with same name from ModuleCollection
-                        var duplicateModules =
-                            ModuleCollection.Where(module =>
-                                ModuleCollection
-                                    .Except(new ObservableCollection<VsModule> { module })
-                                    .Any(x => x.Name == module.Name)
-                            ).ToObservableCollection();
+                        var duplicateModules = SelectAllTheModulesWithSameNameFromModuleCollection();
 
                         //Get all the old version modules/folder from duplicateModules
                         OldVersionModule =
@@ -152,6 +146,15 @@ namespace VS2017OfflineSetupUtility.ViewModels
             }
 
             ModuleCollection.Add(vsModule);
+        }
+
+        private ObservableCollection<VsModule> SelectAllTheModulesWithSameNameFromModuleCollection()
+        {
+            return ModuleCollection.Where(module =>
+                ModuleCollection
+                    .Except(new ObservableCollection<VsModule> {module})
+                    .Any(x => x.Name == module.Name)
+            ).ToObservableCollection();
         }
 
         private bool SelectVs2017OfflineSetupRootFolder()
