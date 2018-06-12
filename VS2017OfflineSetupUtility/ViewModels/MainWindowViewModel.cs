@@ -90,13 +90,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
 
                         var duplicateModules = SelectAllTheModulesWithSameNameFromModuleCollection();
 
-                        //Get all the old version modules/folder from duplicateModules
-                        OldVersionModule =
-                            duplicateModules.Where(module =>
-                                duplicateModules
-                                    .Except(new ObservableCollection<VsModule> { module })
-                                    .Any(x => x.Name == module.Name && x.VersionObject.CompareTo(module.VersionObject) > 0)
-                            ).ToObservableCollection();
+                        GetAllTheOldVersionModulesFromDuplicateModules(duplicateModules);
 
                         if (!OldVersionModule.Any())
                             MessageBox.Show("Old version folder does not exist.");
@@ -155,6 +149,16 @@ namespace VS2017OfflineSetupUtility.ViewModels
                     .Except(new ObservableCollection<VsModule> {module})
                     .Any(x => x.Name == module.Name)
             ).ToObservableCollection();
+        }
+
+        private void GetAllTheOldVersionModulesFromDuplicateModules(ObservableCollection<VsModule> duplicateModules)
+        {
+            OldVersionModule =
+                duplicateModules.Where(module =>
+                    duplicateModules
+                        .Except(new ObservableCollection<VsModule> {module})
+                        .Any(x => x.Name == module.Name && x.VersionObject.CompareTo(module.VersionObject) > 0)
+                ).ToObservableCollection();
         }
 
         private bool SelectVs2017OfflineSetupRootFolder()
