@@ -86,33 +86,7 @@ namespace VS2017OfflineSetupUtility.ViewModels
                     {
                         if (!SelectVs2017OfflineSetupRootFolder()) return;
 
-                        DirectoryInfo dirInfo = new DirectoryInfo(SelectedFolderPath);
-
-                        //classification
-                        var directories = dirInfo.GetDirectories();
-                        foreach (var directory in directories)
-                        {
-                            var vsModule = new VsModule();
-                            if (directory.Name.Contains(","))
-                            {
-                                var stringSplit = directory.Name.Split(',').ToList();
-                                vsModule.Name = stringSplit.FirstOrDefault();
-                                vsModule.Version = stringSplit[1];
-                                stringSplit.Remove(vsModule.Name);
-                                stringSplit.Remove(vsModule.Version);
-                                if (stringSplit.Count() > 0)
-                                {
-                                    foreach (var item in stringSplit)
-                                        vsModule.Name = vsModule.Name + "," + item;
-                                }
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                            vsModule.FullPath = directory.FullName;
-                            ModuleCollection.Add(vsModule);
-                        }
+                        Classification();
 
                         //Select all the Modules with same name from ModuleCollection
                         var duplicateModules =
@@ -138,6 +112,38 @@ namespace VS2017OfflineSetupUtility.ViewModels
                         System.Diagnostics.Debug.WriteLine(exception.Message);
                     }
                 }));
+            }
+        }
+
+        private void Classification()
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(SelectedFolderPath);
+
+            //classification
+            var directories = dirInfo.GetDirectories();
+            foreach (var directory in directories)
+            {
+                var vsModule = new VsModule();
+                if (directory.Name.Contains(","))
+                {
+                    var stringSplit = directory.Name.Split(',').ToList();
+                    vsModule.Name = stringSplit.FirstOrDefault();
+                    vsModule.Version = stringSplit[1];
+                    stringSplit.Remove(vsModule.Name);
+                    stringSplit.Remove(vsModule.Version);
+                    if (stringSplit.Count() > 0)
+                    {
+                        foreach (var item in stringSplit)
+                            vsModule.Name = vsModule.Name + "," + item;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+
+                vsModule.FullPath = directory.FullName;
+                ModuleCollection.Add(vsModule);
             }
         }
 
