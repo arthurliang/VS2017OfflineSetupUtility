@@ -138,7 +138,8 @@ namespace VS2017OfflineSetupUtility.ViewModels
             var vsModule = new VsModule
             {
                 Name = stringSplit.FirstOrDefault(),
-                Version = stringSplit[1]
+                Version = stringSplit[1],
+                FullPath = subDirectory.FullName
             };
 
             stringSplit.Remove(vsModule.Name);
@@ -150,7 +151,6 @@ namespace VS2017OfflineSetupUtility.ViewModels
                     vsModule.Name = $"{vsModule.Name},{item}";
             }
 
-            vsModule.FullPath = subDirectory.FullName;
             ModuleCollection.Add(vsModule);
         }
 
